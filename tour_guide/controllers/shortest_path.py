@@ -2,8 +2,6 @@ from fastapi import HTTPException, APIRouter
 from tour_guide.validators.shortest_path import shortestPathRequestFormat
 import networkx as nx
 from math import radians, sin, cos, sqrt, atan2
-from fastapi.responses import RedirectResponse
-import webbrowser
 import pandas as pd
 
 
@@ -103,10 +101,6 @@ async def get_shortest_path(request_body: shortestPathRequestFormat):
         sorted_coordinates = [request_data['current_coordinates']] + sorted_coordinates
         google_maps_url = "https://www.google.com/maps/dir/" + "/".join([f"{lat},{lon}" for lat, lon in sorted_coordinates])
 
-        # # Redirect the user to Google Maps
-        # return RedirectResponse(url=google_maps_url, status_code=303)
-        # Open Google Maps in the user's browser
-        # webbrowser.open_new_tab(google_maps_url)
         response['navigation_url'] = google_maps_url
     
         return {"data": response}
