@@ -2,7 +2,6 @@ from fastapi import Depends, FastAPI
 import uvicorn
 from middleware.exception_middleware import catch_exceptions_middleware
 from middleware.http_error import Conflict, Unauthorized, Unprocessable, http_error_handler
-from core.dependencies.authentication import authentication_dependency
 from core.routes import api_router as authenticated_router
 from unauth_routes import api_router as unauthenticated_router
 import os
@@ -43,6 +42,5 @@ app.add_middleware(
 
 app.include_router(
     authenticated_router,
-    dependencies=[Depends(authentication_dependency)]
 )
 app.include_router(unauthenticated_router)
